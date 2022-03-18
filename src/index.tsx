@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Example from './Example';
+import BusItem from './component/BusItem';
+import "antd/dist/antd.css"
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
-    <Example />
+    {/* <Example /> */}
+    <BusItem/>
   </React.StrictMode>,
   document.getElementById('root')
 );
