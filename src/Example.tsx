@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import Item from './Item'
 
 const Example = () => {
     const [count, setCount] = useState(0)
-    const [data, setData] = useState()
+    const [data, setData] = useState<any>([])
 
     // useEffect(()=>{
     //     document.title = `你点击了${count}次title`
@@ -25,13 +26,20 @@ const Example = () => {
     },[])
 
     return (
+        // <div>
+        //     <p>你点击了{count}次 </p>
+        //     <button onClick={()=>{
+        //         setCount(count+1)
+        //     }}>
+        //         点这里
+        //     </button>
+        // </div>
+
         <div>
-            <p>你点击了{count}次 </p>
-            <button onClick={()=>{
-                setCount(count+1)
-            }}>
-                点这里
-            </button>
+            {data.map((r:any)=>(
+                <p>{r.phone}</p>
+                // <Item email={r.email} />
+            ))}
         </div>
     )
 }
