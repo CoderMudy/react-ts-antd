@@ -30,7 +30,7 @@ const data = [
     },
   ];
 
-const BusItem:React.FC = (props) => {
+const Buses:React.FC = (props) => {
   return (
     <Table dataSource={data}>
     {/* <ColumnGroup title="Name"> */}
@@ -69,4 +69,4 @@ const BusItem:React.FC = (props) => {
   )
 }
 
-export default BusItem
+export default Buses
