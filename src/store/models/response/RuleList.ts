@@ -1,8 +1,8 @@
 import { Rule } from "../rule"
 
-export interface RuleList {
-    success: boolean,
+export interface RuleListResult {
+    // success: boolean,
     data: Rule[]
-    errorCode: string
-    errorMessage: string
+    // errorCode: string
+    // errorMessage: string
 }

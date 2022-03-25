@@ -1,10 +1,11 @@
-import { connectRouter } from "connected-react-router";
+import { connectRouter, RouterState } from "connected-react-router";
 import { combineReducers } from "redux";
 import {History} from "history"
-import ruleReducer from "./rule.reducer";
+import ruleReducer, { RuleState } from "./rule.reducer";
 
 export interface AppState {
-
+    router: RouterState
+    rule: RuleState
 }
 
 const createRootReducer = (history: History) => combineReducers({

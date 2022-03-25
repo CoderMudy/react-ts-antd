@@ -16,21 +16,21 @@ export interface GetRulesAction {
 
 export interface GetRulesSuccessAction {
     type: typeof GET_RULES_SUCCESS,
-    payload: Rule[]
+    rules: Rule[]
 }
 
 export const getRule = (
-    busName: string = "jj"
+    busName: string = "test-bus"
 ): GetRulesAction => ({
     type: GET_RULES,
     busName
 })
 
 export const getRuleSuccess = (
-    payload:Rule[]
+    rules:Rule[]
 ):GetRulesSuccessAction => ({
     type: GET_RULES_SUCCESS,
-    payload
+    rules
 })
 
 /**
@@ -44,4 +44,5 @@ export interface PostRuleAction {
 
 export type RuleUnionType =
     | GetRulesAction
+    | GetRulesSuccessAction
     | PostRuleAction

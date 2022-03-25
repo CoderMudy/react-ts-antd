@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { Table, Tag, Space, Button } from 'antd';
 import Search from 'antd/lib/input/Search';
 import Layout from './Layout';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRule } from '../../store/actions/rule.action';
+import { AppState } from '../../store/reducers';
+import { RuleState } from '../../store/reducers/rule.reducer';
 
 
 const { Column, ColumnGroup } = Table;
@@ -34,19 +38,31 @@ const data = [
 ];
 
 const Rules: React.FC = () => {
+  const dispatch = useDispatch()
+  
+  useEffect(()=>{
+    dispatch(getRule())
+  },[])
+
+  const {rules} = useSelector<AppState, RuleState>(
+    state => state.rule
+  )
+
+
   return (
     <Layout title="规则列表" subTitle="">
       <div>规则列表</div>
-      {/* <div>
+      <div>
         <div className="div-inline">
           <Button type="primary" style={{ background: '#0064c8' }}>创建规则</Button>
           <Search style={{ width: 300 }} placeholder='可按规则名称进行前缀匹配搜索' onSearch={(value) => {
             console.log("点击了搜索", value)
           }}></Search>
         </div>
-        <Table dataSource={data}>
+        <Table dataSource={rules}>
           <Column title="名称" dataIndex="ruleName" key="ruleName" />
-          <Column title="状态" dataIndex="lastName" key="lastName" />
+          <Column title="总线名称" dataIndex="busName" key="busName" />
+          {/* <Column title="状态" dataIndex="lastName" key="lastName" />
           <Column title="事件目标" dataIndex="lastName" key="lastName" />
           <Column title="创建时间" dataIndex="createTime" key="createTime" />
 
@@ -62,10 +78,10 @@ const Rules: React.FC = () => {
                 <a>禁用</a>
                 <a>删除</a>
               </Space>
-            )}
-          />
+            )} */}
+          {/* /> */}
         </Table>
-      </div> */}
+      </div>
     </Layout>
   )
 }

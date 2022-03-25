@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { routerMiddleware } from 'connected-react-router'
 import rootSaga from './sagas'
 
+
 export const history = createHashHistory()
 const sagaMiddleware = createSagaMiddleware()
 

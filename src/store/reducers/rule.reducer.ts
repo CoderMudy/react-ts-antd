@@ -1,12 +1,9 @@
-import { GET_RULES, POST_RULE, RuleUnionType } from "../actions/rule.action"
+import { GET_RULES, POST_RULE, RuleUnionType,GET_RULES_SUCCESS } from "../actions/rule.action"
+import { Rule } from "../models/rule"
 
-export interface RuleState{
-    rules:{
-        loaded: boolean,
-        success: boolean,
-        message: string
-    }
-    addRule:{
+export interface RuleState {
+    rules:  Rule[],
+    addRule: {
         loaded: boolean,
         success: boolean,
         message: string
@@ -14,11 +11,7 @@ export interface RuleState{
 }
 
 const intialState: RuleState = {
-    rules: {
-        loaded: false,
-        success: false,
-        message: ""
-    },
+    rules: [],
     addRule: {
         loaded: false,
         success: false,
@@ -29,27 +22,24 @@ const intialState: RuleState = {
 
 export default function ruleReducer(state = intialState,
     action: RuleUnionType
-    ){
-        switch (action.type) {
-            case GET_RULES:
-                return{
-                    ...state,
-                    rules:{
-                        loaded: true,
-                        success: true
-                    }  
+) {
+    switch (action.type) {
+        case GET_RULES_SUCCESS:
+            return {
+                ...state,
+                rules: action.rules
+            }
+        case POST_RULE:
+            return {
+                ...state,
+                addRule: {
+                    loaded: true,
+                    success: true
                 }
-            case POST_RULE:
-                return{
-                    ...state,
-                    addRule:{
-                        loaded: true,
-                        success: true
-                    }  
-                }
+            }
 
-            default:
-                return state;
-        }
-    
+        default:
+            return state;
+    }
+
 }
