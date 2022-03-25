@@ -61,6 +61,7 @@ const Rules: React.FC = () => {
         </div>
         <Table dataSource={rules}>
           <Column title="名称" dataIndex="ruleName" key="ruleName" />
+          <Column title="规则描述" dataIndex="ruleDesc" key="ruleDesc" />
           <Column title="总线名称" dataIndex="busName" key="busName" />
           {/* <Column title="状态" dataIndex="lastName" key="lastName" />
           <Column title="事件目标" dataIndex="lastName" key="lastName" />

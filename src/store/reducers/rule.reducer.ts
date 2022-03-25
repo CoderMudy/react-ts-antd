@@ -26,12 +26,12 @@ export default function ruleReducer(state = intialState,
     switch (action.type) {
         case GET_RULES_SUCCESS:
             return {
-                ...state,
+                // ...state,
                 rules: action.rules
             }
         case POST_RULE:
             return {
-                ...state,
+                // ...state,
                 addRule: {
                     loaded: true,
                     success: true
