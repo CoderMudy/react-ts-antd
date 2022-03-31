@@ -13,14 +13,12 @@ import Routes from './Routes';
 import store from './store/index';
 import { history } from './store';
 
-
-
 // ReactDOM.render(
 //   <React.StrictMode>
 //     {/* <App /> */}
 //     {/* <Example /> */}
 //     {/* <Buses/> */}
-//     <Rules/>
+//     <SchemaEditor />,
 //   </React.StrictMode>,
 //   document.getElementById('root')
 // );
