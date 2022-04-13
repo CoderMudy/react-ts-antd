@@ -1,0 +1,1 @@
+declare module '@wibetter/json-schema-editor/dist/index.umd'
