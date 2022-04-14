@@ -19,12 +19,12 @@ export interface EventTargetParam {
 }
 
 
-export interface EventTargetParam {
-    prop: string
-    httpParametersType: string
-    variableType: string
-    value: string
-}
+// export interface EventTargetParam {
+//     prop: string
+//     httpParametersType: string
+//     variableType: string
+//     value: string
+// }
 
 export interface EventTarget {
     id: number

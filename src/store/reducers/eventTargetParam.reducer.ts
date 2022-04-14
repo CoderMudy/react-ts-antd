@@ -20,7 +20,7 @@ export default function eventTargeParamReducer(
     switch (action.type) {
         case GET_EVENTTARGET_PARAMS_SUCCESS:
             return {
-                targetParam: action.targetParams
+                targetParams: action.targetParams
             }
         default:
             return state;
