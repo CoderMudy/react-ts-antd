@@ -18,7 +18,7 @@ const EventTargetRelation = () => {
   useEffect(() => {
     dispatch(getEventTargetList())
     // 获取该事件类型的参数列表
-    dispatch(getEventTypeData(3))
+    dispatch(getEventTypeData(8))
   }, [])
 
   const { targets } = useSelector<AppState, EventTargetListState>(
@@ -91,7 +91,7 @@ const EventTargetRelation = () => {
 
     <Card title="投递参数设置">
 
-      <Form onFinish={onFinish} initialValues={{ eventTypeId: 3 }}>
+      <Form onFinish={onFinish} initialValues={{ eventTypeId: 8 }}>
         <Form.Item label="事件类型" name="eventTypeId">
           <Input disabled />
         </Form.Item>
