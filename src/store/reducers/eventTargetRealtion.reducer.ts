@@ -1,26 +1,26 @@
-import { EventTargetUnitonType, getEventTargetList, GET_EVENTTARGET_SUCCESS } from "../actions/eventTargetRealtion.action";
-import { EventTarget } from "../models/eventTarget";
+import { AddEventRelationUnitonType, ADD_RELATION, GET_RELATION_DETAIL_SUCCESS } from "../actions/eventTargetRealtion.action";
 
-export interface EventTargetListState {
-    targets
+
+export interface AddRelationState {
+    
 }
 
 
-const intialState: EventTargetListState = {
-    targets: []
+const intialState: AddRelationState = {
+   
 }
 
 
-export default function eventTargetRelationReducer(
+export default function addRelationReducer(
     state = intialState,
-    action: EventTargetUnitonType
+    action: AddEventRelationUnitonType
 ) {
-    console.log("?getEventTargetList")
+    console.log("addRelation添加")
     switch (action.type) {
-        case GET_EVENTTARGET_SUCCESS:
-            return {
-                targets: action.targets
-            }
+        // case ADD_RELATION:
+        //     return {
+        //         ...state
+        //     }
     
         default:
             return state;

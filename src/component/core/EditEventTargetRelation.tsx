@@ -1,28 +1,25 @@
 import { Button, Card, Col, Form, Input, Row, Select, Table } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { addRelation, AddRelationPayload } from '../../store/actions/eventTargetRealtion.action';
+import { AddRelationPayload, getRelationDetail } from '../../store/actions/eventTargetRealtion.action';
 import { getEventTargetParams } from '../../store/actions/eventParam.action';
 import { getEventTargetList } from '../../store/actions/eventTarget.action';
 import { getEventTypeData } from '../../store/actions/eventTypeData.action';
 import { AppState } from '../../store/reducers';
 import { EventTargetParamsState } from '../../store/reducers/eventTargetParam.reducer';
-import { EventTypeDataState } from '../../store/reducers/eventTypeData.reducer';
 import { EventTargetListState } from '../../store/reducers/eventTargetList.reducer';
+import { EventTypeDataState } from '../../store/reducers/eventTypeData.reducer';
+import { GetRelationState } from '../../store/reducers/getEventTargetRealtion.reducer';
 
-const EventTargetRelation: React.FC = () =>  {
+const EditEventTargetRelation: React.FC = () =>  {
   const param = new URLSearchParams(window.location.search)
-  const eventTypeId = param.get("id")
-  const eventTypeName = param.get("eventTypeName")
 
+  const relationId = param.get("id")
+  // const eventTypeName = param.get("eventTypeName")
+  var eventTypeName = ""
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(getEventTargetList())
-    // 获取该事件类型的参数列表
-    dispatch(getEventTypeData(eventTypeId))
-  }, [])
+
 
   const { targets } = useSelector<AppState, EventTargetListState>(
     state => state.eventTargetList
@@ -35,6 +32,35 @@ const EventTargetRelation: React.FC = () =>  {
   const { properties } = useSelector<AppState, EventTypeDataState>(
     state => state.eventTypeData
   )
+
+  const { res } = useSelector<AppState, GetRelationState>(
+    state => state.getRelationDetail
+  )
+
+
+  useEffect(() => {
+    // 获取参数对应关系详情
+    dispatch(getRelationDetail(Number(relationId)))
+  }, [])
+
+  // 获取到参数关系对应的详情之后 获取事件类型的参数列表
+  useEffect(() => {
+    const eventTypeId = res.eventTypeId
+    if(eventTypeId === -1){
+      return
+    }
+    eventTypeName = res.eventTargetName
+    const eventTargetId = res.eventTargetId
+
+    // 获取该事件类型的参数列表
+    dispatch(getEventTypeData(eventTypeId))
+
+    dispatch(
+      getEventTargetParams(eventTargetId)
+    )
+  }, [res])
+
+  
 
   const [targetList, setTargetList] = useState([]);
   const [eventTypeData, setEventTypeData] = useState([]);
@@ -65,6 +91,7 @@ const EventTargetRelation: React.FC = () =>  {
       label: '$.data.' + item.prop,
     })));
     console.log("eventTypeData", eventTypeData)
+    console.log("properties", properties)
   }, [properties]);
 
   const onSelect = (value) => {
@@ -81,32 +108,37 @@ const EventTargetRelation: React.FC = () =>  {
       eventTargetId: value.eventTargetId,
       relation: []
     }
-    value.eventTypeId = eventTypeId
+    value.eventTypeId = res.eventTypeId
+    value.eventTargetId = res.eventTargetId
     console.log("需要提交的数据", value)
-    dispatch(
-      addRelation(value)
-    )
+    // dispatch(
+    //   addRelation(value)
+    // )
   }
+
+
 
   return (
 
-    <Card title="投递参数设置">
+    <Card title="投递参数编辑">
 
-      <Form onFinish={onFinish} initialValues={{ eventTypeId: eventTypeName }}>
+      <Form onFinish={onFinish} >
         <Form.Item label="事件类型" name="eventTypeId">
-          <Input disabled />
+          {/* <Input disabled /> */}
+          <span>{res.eventTypeName}</span>
         </Form.Item>
         <Form.Item label="事件目标" name="eventTargetId">
-          <Select id="eee" options={targetList} onSelect={onSelect} />
+        {/* <Input disabled /> */}
+        <span>{res.eventTargetName}</span>
         </Form.Item>
 
 
         <label>参数关系设置</label>
 
         <div>
-          {targetParams.map(item => {
+          {res.relation.map(item => {
             return <Form.Item label={item.prop + `(` + item.httpParametersType + ')'} name={item.prop}>
-              <Select  options={eventTypeData} />
+              <Select  options={eventTypeData} defaultValue={item.value}/>
             </Form.Item>
           })}
         </div>
@@ -116,7 +148,7 @@ const EventTargetRelation: React.FC = () =>  {
             提交
           </Button>
         </Form.Item>
-
+ 
 
       </Form>
 
@@ -128,5 +160,4 @@ const EventTargetRelation: React.FC = () =>  {
 }
 
 
-export default EventTargetRelation
-
+export default EditEventTargetRelation
