@@ -30,11 +30,6 @@ const EventTargetRelationDetail: React.FC = () =>  {
   )
 
 
-  // useEffect(() => {
-
-  // }, [res]);
-
-
   return (
 
     <Card title="投递参数设置">

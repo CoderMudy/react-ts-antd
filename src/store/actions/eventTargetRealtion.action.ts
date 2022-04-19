@@ -9,6 +9,11 @@ export const ADD_RELATION_FAIL = "ADD_RELATION_FAIL"
 export const GET_RELATION_DETAIL = "GET_RELATION_DETAIL"
 export const GET_RELATION_DETAIL_SUCCESS = "GET_RELATION_DETAIL_SUCCESS"
 
+export const EDIT_RELATION = "EDIT_RELATIONT"
+export const EDIT_RELATION_SUCCESS = "EDIT_RELATION_SUCCESS"
+export const EDIT_RELATION_FAIL = "EDIT_RELATION_FAIL"
+
+
 export interface AddRelationPayload{
     // eventTypeId: string,
     // eventTargetId: string,
@@ -84,6 +89,49 @@ export const getRelationDetailSuccess = (result) : GetRelationDetailSuccessActio
 })
 
 
+/**
+ * 编辑投递关系
+ */
+ export interface EditRelationAction {
+    type: typeof EDIT_RELATION
+    payload: AddRelationPayload
+}
+
+/**
+ * 编辑成功
+ */
+export interface EditRelationSuccessAction {
+    type: typeof EDIT_RELATION_SUCCESS
+}
+
+/**
+ * 编辑失败
+ */
+export interface EditRelationFailAction {
+    type: typeof EDIT_RELATION_FAIL
+    message: string
+}
+
+
+/**
+ * 
+ * @returns 
+ */
+export const editRelation = (payload: AddRelationPayload): EditRelationAction =>({
+    type: EDIT_RELATION,
+    payload
+})
+
+export const editRelationSuccess = (): EditRelationSuccessAction =>({
+    type: EDIT_RELATION_SUCCESS,
+})
+
+export const editRelationFail = (message): EditRelationFailAction =>({
+    type: EDIT_RELATION_FAIL,
+    message
+})
+
+
 
 export type AddEventRelationUnitonType = 
     | AddRelationAction
@@ -91,5 +139,8 @@ export type AddEventRelationUnitonType =
     | AddRelationFailAction
     | GetRelationDetailAction
     | GetRelationDetailSuccessAction
+    | EditRelationAction
+    | EditRelationSuccessAction
+    | EditRelationFailAction
 
 

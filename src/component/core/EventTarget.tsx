@@ -1,4 +1,4 @@
-import { Button, Card, Col, Form, Input, Row, Select, Table } from 'antd'
+import { Button, Card, Col, Form, Input, notification, Row, Select, Table } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -10,10 +10,12 @@ import { AppState } from '../../store/reducers';
 import { EventTargetParamsState } from '../../store/reducers/eventTargetParam.reducer';
 import { EventTypeDataState } from '../../store/reducers/eventTypeData.reducer';
 import { EventTargetListState } from '../../store/reducers/eventTargetList.reducer';
+import axios from 'axios';
+import { API } from '../../config';
 
-const EventTargetRelation: React.FC = () =>  {
+const EventTargetRelation: React.FC = () => {
   const param = new URLSearchParams(window.location.search)
-  const eventTypeId = param.get("id")
+  const eventTypeId = Number(param.get("id"))
   const eventTypeName = param.get("eventTypeName")
 
   const dispatch = useDispatch()
@@ -37,10 +39,11 @@ const EventTargetRelation: React.FC = () =>  {
   )
 
   const [targetList, setTargetList] = useState([]);
-  const [eventTypeData, setEventTypeData] = useState([]);
+  const [eventTypeData2, setEventTypeData2] = useState([]);
 
 
   useEffect(() => {
+    console.log("事件目标：", targets)
     if (!targets.success) {
       return;
     }
@@ -48,6 +51,7 @@ const EventTargetRelation: React.FC = () =>  {
       value: item.id,
       label: item.eventTargetName
     })));
+    console.log("targetList", targetList)
   }, [targets]); // mount 和 unmount 时执行
 
 
@@ -60,11 +64,11 @@ const EventTargetRelation: React.FC = () =>  {
     if (!properties) {
       return;
     }
-    setEventTypeData(properties.map(item => ({
+    setEventTypeData2(properties.map(item => ({
       value: '$.data.' + item.prop,
       label: '$.data.' + item.prop,
     })));
-    console.log("eventTypeData", eventTypeData)
+    console.log("eventTypeData", eventTypeData2)
   }, [properties]);
 
   const onSelect = (value) => {
@@ -74,7 +78,7 @@ const EventTargetRelation: React.FC = () =>  {
     )
   }
 
-  const onFinish = (value) => {
+  const onFinish = async (value) => {
     console.log("需要提交的数据", value)
     let data: AddRelationPayload = {
       eventTypeId: value.eventTypeId,
@@ -83,10 +87,48 @@ const EventTargetRelation: React.FC = () =>  {
     }
     value.eventTypeId = eventTypeId
     console.log("需要提交的数据", value)
-    dispatch(
-      addRelation(value)
-    )
+    // dispatch(
+    //   addRelation(value)
+    // )
+
+    const response = await axios({
+      url: `${API}/relation/misAdd`,
+      method: 'post',
+      data: value
+    })
+    if(response.data.success === true){
+      openSuccessNotification()
+    }else{
+      openErrorNotification(response.data.errorMessage)
+    }
+    console.log("添加事件类型目标关系2", response.data)
+
   }
+
+
+  const openErrorNotification = (message) => {
+    notification.open({
+      message: '添加失败',
+      description:message,
+      className: 'custom-class',
+      style: {
+        width: 600,
+      },
+    });
+};
+
+const openSuccessNotification = () => {
+    notification.open({
+      message: '添加成功',
+      className: 'custom-class',
+      style: {
+        width: 600,
+      },
+    });
+  
+  
+};
+
 
   return (
 
@@ -106,7 +148,7 @@ const EventTargetRelation: React.FC = () =>  {
         <div>
           {targetParams.map(item => {
             return <Form.Item label={item.prop + `(` + item.httpParametersType + ')'} name={item.prop}>
-              <Select  options={eventTypeData} />
+              <Select options={eventTypeData2} />
             </Form.Item>
           })}
         </div>

@@ -5,7 +5,7 @@ import ruleReducer, { RuleState } from "./rule.reducer";
 import eventTargetRelationReducer, { EventTargetListState } from "./eventTargetList.reducer";
 import eventTargeParamReducer, { EventTargetParamsState } from "./eventTargetParam.reducer";
 import eventTypeDataReducer, { EventTypeDataState } from "./eventTypeData.reducer";
-import addRelationReducer, { AddRelationState } from "./eventTargetRealtion.reducer";
+import addRelationReducer, { RelationState } from "./eventTargetRealtion.reducer";
 import getRelationDetailReducer, { GetRelationState } from "./getEventTargetRealtion.reducer";
 import { RelationDetail } from "../models/response/RelationDetaill";
 
@@ -15,7 +15,8 @@ export interface AppState {
     eventTargetList: EventTargetListState,
     eventTargetParams: EventTargetParamsState,
     eventTypeData: EventTypeDataState,
-    addEventRelation: AddRelationState,
+    addEventRelation: RelationState,
+    editEventRelation: RelationState,
     getRelationDetail: GetRelationState
 }
 
@@ -26,6 +27,7 @@ const createRootReducer = (history: History) => combineReducers({
     eventTargetParams: eventTargeParamReducer,
     eventTypeData: eventTypeDataReducer,
     addEventRelation: addRelationReducer,
+    editEventRelation: addRelationReducer,
     getRelationDetail: getRelationDetailReducer
 
 })
