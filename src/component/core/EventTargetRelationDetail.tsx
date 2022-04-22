@@ -32,7 +32,7 @@ const EventTargetRelationDetail: React.FC = () =>  {
 
   return (
 
-    <Card title="投递参数设置">
+    <Card title="投递参数关系对应详情">
 
       <Form  initialValues={{ eventTypeId: res.eventTypeName}}>
         <Form.Item label="事件类型" name="eventTypeId">
